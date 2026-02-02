@@ -7,15 +7,27 @@
     <!-- 显示对应的业务组件 -->
     <div class="center">
       <Router-View v-slot="{ Component }">
-        <component :is="Component"></component>
+        <!-- 这里与老师的不一样， 他是直接访问store-->
+        <component :is="Component" :status="currentCom.status" :serialNum="1"></component>
       </Router-View>
     </div>
     <!-- 编辑面板 -->
-    <div class="right">编辑面板</div>
+    <div class="right">
+      <EditPannel :com="currentCom" />
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import EditPannel from '@/components/SurveyComs/Edititems/EditPannel.vue';
+import { computed } from 'vue';
+import { useMaterialStore } from '@/stores/useMaterial';
+
+const store = useMaterialStore();
+// 获取当前选中的状态数据
+const currentCom = computed(() => store.coms[store.currentMaterialCom])
+
+</script>
 
 <style scoped lang="scss">
 .layout-container {

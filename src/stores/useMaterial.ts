@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 
 export const useMaterialStore = defineStore('materialStore', {
   state: () => ({
+    currentMaterialCom: 'single-select',
     coms: {
       'single-select': defaultStatusMap['single-select'](),
       // 'multi-select': {},
