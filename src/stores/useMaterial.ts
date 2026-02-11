@@ -1,6 +1,8 @@
 // 组件市场里面所有状态的仓库
 import { defaultStatusMap } from '@/configs/defalutStatus/defaultStatusMap';
 import { defineStore } from 'pinia';
+// 公共actions
+import { setTextStatus, addOption, removeOption, setPostion, setSize } from './actions';
 
 export const useMaterialStore = defineStore('materialStore', {
   state: () => ({
@@ -10,4 +12,12 @@ export const useMaterialStore = defineStore('materialStore', {
       // 'multi-select': {},
     },
   }),
+
+  actions: {
+    setTextStatus,
+    addOption,
+    removeOption,
+    setPostion,
+    setSize,
+  },
 });

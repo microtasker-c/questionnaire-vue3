@@ -20,12 +20,58 @@
 
 <script setup lang="ts">
 import EditPannel from '@/components/SurveyComs/Edititems/EditPannel.vue';
-import { computed } from 'vue';
+import { computed, provide } from 'vue';
 import { useMaterialStore } from '@/stores/useMaterial';
+import { ElMessage } from 'element-plus';
 
 const store = useMaterialStore();
 // 获取当前选中的状态数据
 const currentCom = computed(() => store.coms[store.currentMaterialCom])
+
+const updateStatus = (configKey: string, payload?: number | string | boolean | object) => {
+  // console.log(configKey, payload);
+  // 拿到数据更新值，去仓库修改数据(调用actions)
+  switch (configKey) {
+    case 'title':
+    case 'desc': {
+      if (typeof payload !== 'string') {
+        console.error('title or desc must be string');
+      }
+      store.setTextStatus(currentCom.value.status[configKey], payload)
+    }
+    case 'options': {
+      if (typeof payload === 'number') {
+        // 删除选项
+        const res = store.removeOption(currentCom.value.status[configKey], payload)
+        if (res) ElMessage.success('删除选项成功')
+        else ElMessage.error('选项数量不能少于2个')
+      } else {
+        // 添加选项
+        store.addOption(currentCom.value.status[configKey])
+      }
+    }
+    case 'position': {
+      if (typeof payload !== 'number') {
+        console.error('position must be number')
+      }
+
+      store.setPostion(currentCom.value.status[configKey], payload)
+    }
+
+    case 'titleSize':
+    case 'descSize': {
+      if (typeof payload! == 'number') {
+        console.error('size must be number')
+      }
+      store.setSize(currentCom.value.status[configKey], payload)
+    }
+
+
+  }
+
+
+}
+provide('updateStatus', updateStatus)
 
 </script>
 
