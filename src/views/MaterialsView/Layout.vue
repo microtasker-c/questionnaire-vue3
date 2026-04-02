@@ -36,8 +36,10 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
     case 'desc': {
       if (typeof payload !== 'string') {
         console.error('title or desc must be string');
+        break
       }
       store.setTextStatus(currentCom.value.status[configKey], payload)
+      break
     }
     case 'options': {
       if (typeof payload === 'number') {
@@ -49,21 +51,57 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
         // 添加选项
         store.addOption(currentCom.value.status[configKey])
       }
+      break
     }
     case 'position': {
       if (typeof payload !== 'number') {
         console.error('position must be number')
+        break
       }
 
       store.setPostion(currentCom.value.status[configKey], payload)
+      break
     }
 
     case 'titleSize':
     case 'descSize': {
-      if (typeof payload! == 'number') {
+      if (typeof payload !== 'number') {
         console.error('size must be number')
+        break
       }
       store.setSize(currentCom.value.status[configKey], payload)
+      break
+    }
+
+    case 'titleWeight':
+    case 'descWeight': {
+      if (typeof payload !== 'number') {
+        console.error('wei must be number')
+        break
+      }
+      store.setWeight(currentCom.value.status[configKey], payload)
+      break
+    }
+
+    case 'titleItalic':
+    case 'descItalic': {
+      if (typeof payload !== 'number') {
+        console.error('ita must be number')
+        break
+      }
+      store.setItalic(currentCom.value.status[configKey], payload)
+      break
+    }
+
+    case 'titleColor':
+    case 'descColor': {
+      if (typeof payload !== 'string') {
+        console.error('color must be string')
+        break
+      }
+
+      store.setColor(currentCom.value.status[configKey], payload)
+      break
     }
 
 

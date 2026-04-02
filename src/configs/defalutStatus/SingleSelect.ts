@@ -70,7 +70,7 @@ export default function () {
       },
       titleWeight: {
         id: uuidv4(),
-        currentStatus: 0,
+        currentStatus: 1,
         status: ['加粗', '正常'],
         isShow: true,
         name: 'weight-editor',
@@ -78,7 +78,7 @@ export default function () {
       },
       descWeight: {
         id: uuidv4(),
-        currentStatus: 0,
+        currentStatus: 1,
         status: ['加粗', '正常'],
         isShow: true,
         name: 'weight-editor',
@@ -86,7 +86,7 @@ export default function () {
       },
       titleItalic: {
         id: uuidv4(),
-        currentStatus: 0,
+        currentStatus: 1,
         status: ['斜体', '正常'],
         isShow: true,
         name: 'italic-editor',
@@ -94,7 +94,7 @@ export default function () {
       },
       descItalic: {
         id: uuidv4(),
-        currentStatus: 0,
+        currentStatus: 1,
         status: ['斜体', '正常'],
         isShow: true,
         name: 'italic-editor',

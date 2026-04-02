@@ -25,3 +25,15 @@ export function setPostion(optionsProps: OptionsProps, index: number) {
 export function setSize(optionsProps: OptionsProps, index: number) {
   optionsProps.currentStatus = index;
 }
+
+export function setWeight(optionsProps: OptionsProps, index: number) {
+  optionsProps.currentStatus = index;
+}
+
+export function setItalic(optionsProps: OptionsProps, index: number) {
+  optionsProps.currentStatus = index;
+}
+
+export function setColor(optionsProps: OptionsProps, color: string) {
+  optionsProps.status = color;
+}

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mb-15">
-      <h2 class="title" :style="{
+      <div class="title" :style="{
         color: titleColor,
         fontSize: `${titleSize}px`
       }">
@@ -13,7 +13,7 @@
           'font-bold': !titleWeight,
           'font-italic': !titleItalic
         }">{{ title }}</span>
-      </h2>
+      </div>
       <!-- 描述 -->
       <div class="desc" :style="{
         color: descColor,

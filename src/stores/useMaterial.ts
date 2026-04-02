@@ -2,7 +2,16 @@
 import { defaultStatusMap } from '@/configs/defalutStatus/defaultStatusMap';
 import { defineStore } from 'pinia';
 // 公共actions
-import { setTextStatus, addOption, removeOption, setPostion, setSize } from './actions';
+import {
+  setTextStatus,
+  addOption,
+  removeOption,
+  setPostion,
+  setSize,
+  setWeight,
+  setItalic,
+  setColor,
+} from './actions';
 
 export const useMaterialStore = defineStore('materialStore', {
   state: () => ({
@@ -19,5 +28,8 @@ export const useMaterialStore = defineStore('materialStore', {
     removeOption,
     setPostion,
     setSize,
+    setWeight,
+    setItalic,
+    setColor,
   },
 });
