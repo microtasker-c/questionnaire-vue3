@@ -18,11 +18,20 @@ export const useMaterialStore = defineStore('materialStore', {
     currentMaterialCom: 'single-select',
     coms: {
       'single-select': defaultStatusMap['single-select'](),
+      'single-pic-select': defaultStatusMap['single-pic-select'](),
       // 'multi-select': {},
     },
   }),
 
   actions: {
+    /**
+     * 修改当前组件的仓库
+     * @param comName 组件名 -- single-pic-select
+     */
+    setCurrentMaterialCom(comName: string) {
+      this.currentMaterialCom = comName;
+    },
+
     setTextStatus,
     addOption,
     removeOption,

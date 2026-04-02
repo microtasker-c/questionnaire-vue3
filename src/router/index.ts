@@ -1,3 +1,4 @@
+import { useMaterialStore } from '@/stores/useMaterial';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -85,6 +86,19 @@ const router = createRouter({
       component: () => import('@/views/EditorView/index.vue'),
     },
   ],
+});
+
+// ! 前置守卫 --- 只针对组件市场这一块
+router.beforeEach((to, from, next) => {
+  // 判断是否是组件市场
+  // 组件市场的路由基本就是组件名
+  const activeView = localStorage.getItem('activeView');
+  const store = useMaterialStore();
+  if (activeView === 'materials' && to.name) {
+    store.setCurrentMaterialCom(to.name as string);
+  }
+  console.log(to.name, from);
+  next();
 });
 
 export default router;
