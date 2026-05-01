@@ -1,5 +1,5 @@
-import type { TextProps, OptionsProps } from '@/types';
-import { isStringArray } from '@/types';
+import type { TextProps, OptionsProps, PicLink } from '@/types';
+import { isStringArray, isPicTitleDescStatusArr } from '@/types';
 
 export function setTextStatus(textProps: TextProps, text: string) {
   textProps.status = text;
@@ -36,4 +36,10 @@ export function setItalic(optionsProps: OptionsProps, index: number) {
 
 export function setColor(optionsProps: OptionsProps, color: string) {
   optionsProps.status = color;
+}
+
+export function setPicLinkByIndex(optionProps: OptionsProps, payload: PicLink) {
+  if (isPicTitleDescStatusArr(optionProps.status)) {
+    optionProps.status[payload.index].value = payload.link;
+  }
 }

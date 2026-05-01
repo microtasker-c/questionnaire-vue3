@@ -75,3 +75,9 @@ export function isPicTitleDescStatusArr(status: OptionsStatusArr): status is Pic
     'value' in status[0]
   );
 }
+
+
+export type PicLink = {link:string; index: number}
+export function isPicLink(obj:object): obj is PicLink{
+  return 'link' in obj && 'index' in obj
+}

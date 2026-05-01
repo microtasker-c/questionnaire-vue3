@@ -23,6 +23,8 @@ import EditPannel from '@/components/SurveyComs/Edititems/EditPannel.vue';
 import { computed, provide } from 'vue';
 import { useMaterialStore } from '@/stores/useMaterial';
 import { ElMessage } from 'element-plus';
+import type { PicLink } from '@/types';
+import { isPicLink } from '@/types';
 
 const store = useMaterialStore();
 // 获取当前选中的状态数据
@@ -36,7 +38,7 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
     case 'desc': {
       if (typeof payload !== 'string') {
         console.error('title or desc must be string');
-        break
+        return
       }
       store.setTextStatus(currentCom.value.status[configKey], payload)
       break
@@ -47,7 +49,12 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
         const res = store.removeOption(currentCom.value.status[configKey], payload)
         if (res) ElMessage.success('删除选项成功')
         else ElMessage.error('选项数量不能少于2个')
-      } else {
+      }
+      else if( typeof payload === 'object' && isPicLink(payload)){
+        // 设置图片链接
+        store.setPicLinkByIndex(currentCom.value.status[configKey], payload)
+      }
+      else {
         // 添加选项
         store.addOption(currentCom.value.status[configKey])
       }
@@ -109,7 +116,15 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
 
 
 }
+
+const getLink = (link: PicLink) =>{
+  // console.log(link, "link");
+  updateStatus('options', link)
+
+}
+
 provide('updateStatus', updateStatus)
+provide('getLink', getLink)
 
 </script>
 

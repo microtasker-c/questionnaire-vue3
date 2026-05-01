@@ -11,6 +11,7 @@ import {
   setWeight,
   setItalic,
   setColor,
+  setPicLinkByIndex,
 } from './actions';
 
 export const useMaterialStore = defineStore('materialStore', {
@@ -40,5 +41,6 @@ export const useMaterialStore = defineStore('materialStore', {
     setWeight,
     setItalic,
     setColor,
+    setPicLinkByIndex
   },
 });
