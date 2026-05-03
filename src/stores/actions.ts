@@ -22,7 +22,7 @@ export function setPostion(optionsProps: OptionsProps, index: number) {
   optionsProps.currentStatus = index;
 }
 
-export function setSize(optionsProps: OptionsProps, index: number) {
+export function setCurrentStatus(optionsProps: OptionsProps, index: number) {
   optionsProps.currentStatus = index;
 }
 

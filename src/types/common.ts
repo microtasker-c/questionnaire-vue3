@@ -1,5 +1,5 @@
 import type { defineComponent } from 'vue';
-import type { OptionsStatus } from './editProps';
+import type { OptionsStatus , TypeStatus} from './editProps';
 
 export type VueComType = ReturnType<typeof defineComponent>;
 
@@ -7,5 +7,5 @@ export interface Status {
   type: VueComType;
   name: string;
   id: string;
-  status: OptionsStatus;
+  status: OptionsStatus | TypeStatus;
 }

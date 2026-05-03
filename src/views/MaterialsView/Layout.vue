@@ -23,10 +23,11 @@ import EditPannel from '@/components/SurveyComs/Edititems/EditPannel.vue';
 import { computed, provide } from 'vue';
 import { useMaterialStore } from '@/stores/useMaterial';
 import { ElMessage } from 'element-plus';
-import type { PicLink } from '@/types';
+import type { PicLink, MaterialStore } from '@/types';
 import { isPicLink } from '@/types';
+import { changeEditorIsShowStatus } from '@/utils';
 
-const store = useMaterialStore();
+const store = useMaterialStore() as unknown as MaterialStore;
 // 获取当前选中的状态数据
 const currentCom = computed(() => store.coms[store.currentMaterialCom])
 
@@ -34,6 +35,14 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
   // console.log(configKey, payload);
   // 拿到数据更新值，去仓库修改数据(调用actions)
   switch (configKey) {
+    case 'type':{
+      if (typeof payload === 'number') {
+        changeEditorIsShowStatus(currentCom.value.status, payload)
+        store.setCurrentStatus(currentCom.value.status[configKey], payload)
+      }
+      break
+    }
+
     case 'title':
     case 'desc': {
       if (typeof payload !== 'string') {
@@ -76,7 +85,7 @@ const updateStatus = (configKey: string, payload?: number | string | boolean | o
         console.error('size must be number')
         break
       }
-      store.setSize(currentCom.value.status[configKey], payload)
+      store.setCurrentStatus(currentCom.value.status[configKey], payload)
       break
     }
 

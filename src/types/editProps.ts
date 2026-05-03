@@ -51,6 +51,18 @@ export interface OptionsStatus extends BaseStatus {
   options: OptionsProps;
 }
 
+export interface TypeStatus extends BaseStatus {
+  type: OptionsProps
+}
+
+// 类型保护
+// export function isOptionsStatus(status:BaseStatus): status is OptionsStatus {
+//   return 'option' in status
+// }
+// export function isTypeStatus(status:BaseStatus): status is TypeStatus {
+//   return 'type' in status
+// }
+
 export function isStringArray(status: OptionsStatusArr): status is string[] {
   return Array.isArray(status) && typeof status[0] === 'string';
 }

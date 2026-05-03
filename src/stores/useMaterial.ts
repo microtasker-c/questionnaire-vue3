@@ -7,7 +7,7 @@ import {
   addOption,
   removeOption,
   setPostion,
-  setSize,
+  setCurrentStatus,
   setWeight,
   setItalic,
   setColor,
@@ -20,6 +20,7 @@ export const useMaterialStore = defineStore('materialStore', {
     coms: {
       'single-select': defaultStatusMap['single-select'](),
       'single-pic-select': defaultStatusMap['single-pic-select'](),
+      'text-note': defaultStatusMap['text-note']()
       // 'multi-select': {},
     },
   }),
@@ -37,7 +38,7 @@ export const useMaterialStore = defineStore('materialStore', {
     addOption,
     removeOption,
     setPostion,
-    setSize,
+    setCurrentStatus,
     setWeight,
     setItalic,
     setColor,
