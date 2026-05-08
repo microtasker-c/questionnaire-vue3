@@ -34,7 +34,7 @@ const router = useRouter();
 
 const goToEditor = () => {
   localStorage.setItem('activeView', 'editor')
-  router.push('/editor');
+  router.push('/editor/survey-type');
 };
 
 const goToComMarket = () => {
