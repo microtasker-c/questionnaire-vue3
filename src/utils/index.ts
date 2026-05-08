@@ -1,5 +1,6 @@
-import type { TextProps, OptionsProps , TypeStatus} from '@/types/index';
+import type { TextProps, OptionsProps, TypeStatus, Status } from '@/types/index';
 import { isPicTitleDescStatusArr, isStringArray } from '@/types/index';
+import type { Material } from '@/types/store';
 
 
 export function getTextStatus(props: TextProps) {
@@ -40,5 +41,22 @@ export function changeEditorIsShowStatus(status: TypeStatus, type: number) {
     status.descItalic.isShow = !status.descItalic.isShow;
     status.titleColor.isShow = !status.titleColor.isShow;
     status.descColor.isShow = !status.descColor.isShow;
+  }
+}
+
+
+export function updateInitStatusBeforeAdd(comStatus: Status, newMaterialName: Material) {
+  switch (newMaterialName) {
+    case 'personal-info-gender':
+      comStatus.name = 'personal-info-gender'
+      comStatus.status.title.status = '您的性别是？';
+      comStatus.status.options.status = ['男', '女']
+      break;
+
+    case 'personal-info-education':
+      comStatus.name = 'personal-info-education'
+      comStatus.status.title.status = '您的学历是？';
+      comStatus.status.options.status = ['大专', '本科', '高中']
+      break;
   }
 }

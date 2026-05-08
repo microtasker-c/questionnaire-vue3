@@ -63,7 +63,7 @@ const router = createRouter({
           name: 'advanced-group',
           component: () => import('@/views/MaterialsView/AdvancedGroupView.vue'),
         },
-                {
+        {
           path: '/note-group',
           name: 'note-group',
           component: () => import('@/views/MaterialsView/NoteGroupView.vue'),
@@ -80,6 +80,21 @@ const router = createRouter({
           path: '/personal-info-group',
           name: 'personal-info-group',
           component: () => import('@/views/MaterialsView/PersonalInfoGroupView.vue'),
+          redirect: '/personal-info-gender',
+          children: [
+            {
+              path: '/personal-info-gender',
+              name: 'personal-info-gender',
+              component: () =>
+                import('@/components/SurveyComs/Materials/SelectComs/SingleSelect.vue'),
+            },
+            {
+              path: '/personal-info-education',
+              name: 'personal-info-education',
+              component: () =>
+                import('@/components/SurveyComs/Materials/SelectComs/SingleSelect.vue'),
+            },
+          ]
         },
         {
           path: '/contact-group',

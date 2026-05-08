@@ -1,9 +1,9 @@
 import type { TextProps, OptionsProps, PicLink, Status } from '@/types';
 // 题目类型
-export type SurveyComName = 'single-select' | 'single-pic-select';
+export type SurveyComName = 'single-select' | 'single-pic-select' | 'personal-info-gender' |  'personal-info-education';
 
 // 业务组件类型(题目类型 + 非题目类型)
-export type Material = SurveyComName | 'text-note';
+export type Material = SurveyComName | 'text-note' ;
 
 export interface Actions {
   setTextStatus: (textProps: TextProps, text: string) => void;

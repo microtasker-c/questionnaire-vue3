@@ -6,5 +6,7 @@ import TextNote from './TextNote';
 export const defaultStatusMap = {
   'single-select': singleSelectDefaultStatus,
   'single-pic-select': singlePicSelectDefaultStatus,
-  'text-note': TextNote
+  'text-note': TextNote,
+  'personal-info-gender': singleSelectDefaultStatus,
+  'personal-info-education': singleSelectDefaultStatus,
 };
