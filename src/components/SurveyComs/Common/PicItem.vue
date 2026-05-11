@@ -53,7 +53,7 @@ const props = defineProps({
     default: 0,
   },
 });
-const getLink = inject('getLink');
+const getLink = inject('getLink', ()=>{});
 const imageUrl = ref('');
 
 watch(

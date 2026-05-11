@@ -32,6 +32,10 @@ export const useEditorStore = defineStore('editor', {
     setItalic,
     setColor,
     setPicLinkByIndex,
+    /**
+     * 画布添加组件
+     * @param newCom
+     */
     addCom(newCom: Status){
       this.coms.push(newCom)
       this.currentComponentIndex = -1
@@ -39,6 +43,13 @@ export const useEditorStore = defineStore('editor', {
       if (isSurveyComName(newCom.name)) {
         this.surveyCount++
       }
+    },
+    /**
+     * 设置当前选中的题目
+     * @param index 面板中的题目索引
+     */
+    setCurrentComponentIndex(index:number){
+      this.currentComponentIndex = index
     }
   }
 })
