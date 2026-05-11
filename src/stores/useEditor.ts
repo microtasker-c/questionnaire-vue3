@@ -12,6 +12,8 @@ import {
   setColor,
   setPicLinkByIndex,
 } from './actions';
+import type { Status } from "@/types";
+import { isSurveyComName } from "@/types/store";
 
 
 export const useEditorStore = defineStore('editor', {
@@ -30,5 +32,13 @@ export const useEditorStore = defineStore('editor', {
     setItalic,
     setColor,
     setPicLinkByIndex,
+    addCom(newCom: Status){
+      this.coms.push(newCom)
+      this.currentComponentIndex = -1
+      // 非题目类（如备注说明）是不添加为数量
+      if (isSurveyComName(newCom.name)) {
+        this.surveyCount++
+      }
+    }
   }
 })

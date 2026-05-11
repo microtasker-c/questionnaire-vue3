@@ -21,6 +21,10 @@ import LeftSide from './LeftSide/index.vue'
 import RightSide from './RightSide/index.vue'
 import Center from './Center.vue';
 
+// 仓库
+import { useEditorStore } from '@/stores/useEditor';
+useEditorStore()
+
 </script>
 
 <style lang="scss" scoped>

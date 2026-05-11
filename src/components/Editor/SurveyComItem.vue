@@ -10,8 +10,12 @@
 import { defaultStatusMap } from '@/configs/defalutStatus/defaultStatusMap'
 import { updateInitStatusBeforeAdd } from '@/utils'
 import type { Material, Status } from '@/types/store'
+import { useEditorStore } from '@/stores/useEditor'
+// 事件总线
+import eventBus from '@/utils/eventBus'
 
 const props  = defineProps(['item'])
+const store = useEditorStore()
 
 const addSurveyCom = () =>{
   const newSurveyComName = props.item.materialName as Material
@@ -23,8 +27,9 @@ const addSurveyCom = () =>{
 
   const newSurveyComStatus = defaultStatusMap[newSurveyComName]() as Status
   updateInitStatusBeforeAdd(newSurveyComStatus, newSurveyComName)
-
-
+  store.addCom(newSurveyComStatus)
+  // 添加新组件都要滚动到底部
+  eventBus.emit('scrollToBottom')
 
 }
 

@@ -1,11 +1,35 @@
 <template>
-  <div class="center-container">
-    画布区
+  <div class="center-container" ref="centerContainer">
+    <div v-for="(item, index) in store.coms" :key="index">
+      <component :is="item.type" :status="item.status" :serialNum="1"></component>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useEditorStore } from '@/stores/useEditor';
+import { nextTick, ref } from 'vue';
+import eventBus from '@/utils/eventBus'
 
+const store = useEditorStore()
+const centerContainer = ref<HTMLElement | null>(null)
+
+  const scrollToBottom = () => {
+    nextTick(() => {
+      // 获取容器的dom元素
+      const container = centerContainer.value;
+      if (container) {
+        window.scrollTo({
+          top: container.scrollHeight,
+          behavior: 'smooth',
+        });
+      }
+    });
+  };
+
+
+// 通过事件总线提供滚动方法给外界调用
+eventBus.on('scrollToBottom', scrollToBottom)
 </script>
 
 <style scoped>
@@ -17,11 +41,13 @@
   padding: 20px;
   background: var(--white);
   position: relative;
+
   .content {
     cursor: pointer;
     padding: 10px;
     background-color: var(--white);
     border-radius: var(--border-radius-sm);
+
     &:hover {
       transform: scale(1.01);
       transition: 0.5s;
@@ -29,11 +55,13 @@
     }
   }
 }
+
 .active {
   transform: scale(1.01);
   transition: 0.5s;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .delete-btn {
   right: -5px;
   top: -10px;

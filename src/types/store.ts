@@ -20,3 +20,10 @@ export interface MaterialStore extends Actions {
   coms: Record<Material, Status>;
   setCurrentSurveyCom: (com: Material) => void;
 }
+
+// 记录题目类型的数组
+export const SurveyComNameArray = [ 'single-select' , 'single-pic-select' , 'personal-info-gender' ,  'personal-info-education']
+
+export function isSurveyComName(value:string): value is SurveyComName {
+  return SurveyComNameArray.includes(value as SurveyComName)
+}
