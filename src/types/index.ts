@@ -2,3 +2,4 @@ export * from './common';
 export * from './editProps';
 export * from './store'
 export * from './eventBus'
+export * from './db'
