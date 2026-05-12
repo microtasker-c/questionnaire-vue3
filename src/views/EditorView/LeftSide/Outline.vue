@@ -1,9 +1,16 @@
 <template>
   <div v-if="store.surveyCount">
     <draggable v-model="store.coms" item-key="index" @start="dragstart">
-      <template #item="{element}">
-        <div class="mb-10">
-          <div class="item">1.{{ element.status.title.status.length > 10 ?
+      <template #item="{element,index}">
+        <div
+          class="mb-10"
+          v-show="isSurveyComName(element.name)"
+          @click="clickHandler(index)"
+          :class="{
+            active: store.currentComponentIndex === index
+          }"
+        >
+          <div class="item">{{serialNum[index]}}{{ element.status.title.status.length > 10 ?
            element.status.title.status.substring(0,10) + '...'
            : element.status.title.status }}</div>
         </div>
@@ -17,13 +24,25 @@
 import { useEditorStore } from '@/stores/useEditor';
 // 拖拽组件
 import draggable from 'vuedraggable'
+import { useSurveyNo } from '@/utils/hook';
+import { computed } from 'vue';
+import { isSurveyComName } from '@/types';
+import eventBus from "@/utils/eventBus"
 
-
-
+const serialNum = computed(() =>useSurveyNo(store.coms).value)
 const store = useEditorStore()
 
 const dragstart = () =>{
   store.setCurrentComponentIndex(-1)
+}
+
+const clickHandler = (index: number) => {
+  if (store.currentComponentIndex === index) {
+    store.setCurrentComponentIndex(-1)
+  } else {
+    store.setCurrentComponentIndex(index)
+    eventBus.emit('scrollToCenter', index)
+  }
 }
 </script>
 

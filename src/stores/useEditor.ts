@@ -50,6 +50,13 @@ export const useEditorStore = defineStore('editor', {
      */
     setCurrentComponentIndex(index:number){
       this.currentComponentIndex = index
+    },
+    removeCom(index:number){
+      // 检测是否为问卷题目
+      if (isSurveyComName(this.coms[index].name)) {
+        this.surveyCount--
+      }
+      this.coms.splice(index, 1)
     }
   }
 })

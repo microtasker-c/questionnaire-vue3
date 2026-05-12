@@ -9,8 +9,18 @@
         :class="{
           active: store.currentComponentIndex === index
         }"
-        @click="clickHandler(index)">
-        <component :is="element.type" :status="element.status" :serialNum="1"></component>
+        @click="clickHandler(index)"
+        :key="element.id"
+        :ref="(el)=>(componentsRefs[index] = el)"
+        >
+        <component :is="element.type" :status="element.status" :serialNum="serialNum[index]"></component>
+        <!-- 删除按钮 -->
+         <div class="absolute delete-btn" v-show="store.currentComponentIndex === index" >
+          <el-button
+          type="danger" class="ml-10" size="small" :icon="Close" circle
+          @click.stop="removeCom(index)"
+          ></el-button>
+         </div>
       </div>
       </template>
     </draggable>
@@ -21,16 +31,22 @@
 
 <script setup lang="ts">
 import { useEditorStore } from '@/stores/useEditor';
-import { nextTick, ref } from 'vue';
+import { computed, nextTick, ref, type ComponentPublicInstance } from 'vue';
 import eventBus from '@/utils/eventBus'
 // 拖拽组件
 import draggable from 'vuedraggable'
-
+import { useSurveyNo } from '@/utils/hook';
+import { Close } from '@element-plus/icons-vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
 const store = useEditorStore()
 const centerContainer = ref<HTMLElement | null>(null)
+const componentsRefs = ref<([Element | ComponentPublicInstance | null])>([])
+
+// 获取题目编号
+const serialNum = computed(() =>useSurveyNo(store.coms).value)
 
 /**
- * center界面滚动到刚添加的组件
+ * center界面滚动到<刚添加>的组件
  * 在子组件中使用
  */
 const scrollToBottom = () => {
@@ -46,6 +62,19 @@ const scrollToBottom = () => {
   });
 };
 
+
+const scrollToCenter = (index:number) =>{
+  nextTick(() =>{
+    const element = componentsRefs.value[index]
+    if (element instanceof HTMLElement) {
+      element.scrollIntoView({
+        behavior:'smooth',
+        block:'center'
+      })
+    }
+  })
+}
+
 const clickHandler = (index: number) => {
   if (store.currentComponentIndex === index) {
     store.setCurrentComponentIndex(-1)
@@ -53,6 +82,24 @@ const clickHandler = (index: number) => {
     store.setCurrentComponentIndex(index)
   }
 }
+/**
+ * 删除选中的组件
+ */
+const removeCom = (index: number) => {
+  ElMessageBox.confirm('确定删除该组件吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(() => {
+      store.removeCom(index);
+      store.setCurrentComponentIndex(-1);
+      ElMessage.success('删除成功');
+    })
+    .catch(() => {
+      ElMessage.info('已取消删除');
+    });
+};
 
 
 const dragstart = () =>{
@@ -61,6 +108,7 @@ const dragstart = () =>{
 
 // 通过事件总线提供滚动方法给外界调用
 eventBus.on('scrollToBottom', scrollToBottom)
+eventBus.on('scrollToCenter', scrollToCenter)
 </script>
 
 <style scoped>
