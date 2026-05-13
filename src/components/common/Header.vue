@@ -5,8 +5,16 @@
       <div class="left flex justify-content-center align-items-center">
         <el-button :icon="ArrowLeft" circle size="small" @click="goHome" />
       </div>
-      <div class="center flex align-items-center space-between pl-15 pr-15"></div>
-      <div class="right flex justify-content-center align-items-center">
+      <div class="center flex align-items-center space-between pl-15 pr-15">
+        <div v-if="isEditor">
+          <!-- 是编辑器，需显示额外的按钮 -->
+          <div>
+            <el-button type="danger" size="small" @click="reset">重置问卷</el-button>
+            <el-button type="success" size="small" @click="saveSurvey">保存问卷</el-button>
+          </div>
+        </div>
+      </div>
+      <div class="right flex justify-content-center align-items-center">x
         <el-avatar :size="30" :src="avatar" />
       </div>
     </div>
@@ -16,8 +24,22 @@
 <script setup lang="ts">
 import { ArrowLeft } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
-const router = useRouter();
+
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { useEditorStore } from '@/stores/useEditor';
 import { ref } from 'vue';
+import { saveSurvey } from '@/db/operation';
+
+
+const router = useRouter();
+const store = useEditorStore()
+
+defineProps({
+  isEditor: {
+    type: Boolean,
+    required: true
+  }
+})
 
 const goHome = () => {
   localStorage.setItem('activeView', 'home')
@@ -25,6 +47,50 @@ const goHome = () => {
 };
 
 const avatar = ref('https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif');
+
+/**
+ * 重置问卷
+ */
+const reset = () => {
+  ElMessageBox.confirm('确定重置问卷吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(() => {
+      store.resetComs()
+      ElMessage.success('重置成功');
+    })
+    .catch(() => {
+      ElMessage.info('已取消重置');
+    });
+}
+
+/**
+ * 保存问卷
+ */
+const saveSurvey = () => {
+  ElMessageBox.prompt("请输入问卷标题", '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'info',
+  }).then(({ value }) => {
+    const surveyToSave = {
+      createDate: new Date().getTime(),
+      title: value,
+      updateDate: new Date().getTime(),
+      surveyCount: store.surveyCount,
+      coms: JSON.parse(JSON.stringify(store.coms)),
+    };
+    store.saveComs(surveyToSave).then(() =>{
+      ElMessage.success("问卷已保存")
+    }).catch(() =>{
+      ElMessage.error("问卷保存失败")
+    })
+  }).catch(() => {
+    ElMessage.info("已取消保存")
+  })
+}
 </script>
 
 <style scoped lang="scss">

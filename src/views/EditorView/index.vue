@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="header">
-        <Header></Header>
+        <Header :is-editor="true"></Header>
       </div>
 
       <!-- 编辑器主题区域 -->
