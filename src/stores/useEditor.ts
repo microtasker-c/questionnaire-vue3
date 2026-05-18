@@ -230,7 +230,7 @@ const initStore = () => [
 ];
 
 // indexDB数据库操作方法
-import { saveSurvey } from "@/db/operation";
+import {  saveSurvey, updateById } from "@/db/operation";
 
 
 
@@ -290,6 +290,31 @@ export const useEditorStore = defineStore('editor', {
      */
     saveComs(data: SurveyDBDate){
       return saveSurvey(data)
-    }
+    },
+
+    /**
+     * 还原问卷的仓库状态，其实就是根据传入的数据设置coms...
+     *
+     */
+    setStore(data: SurveyDBDate){
+      this.coms = data.coms
+      this.surveyCount  = data.surveyCount
+      this.currentComponentIndex = -1
+    },
+
+    // 更新问卷
+    updateComs(id:number, data:Partial<SurveyDBDate>){
+      return updateById(id, data)
+    },
+
+    // /**
+    //  * 删除问卷
+    //  * @param id
+    //  * @returns
+    //  */
+    // removeComs(id: number) {
+    //   return deleteSurveyById(id)
+    // },
+
   }
 })

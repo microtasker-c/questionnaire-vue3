@@ -1,6 +1,7 @@
 import type { TextProps, OptionsProps, TypeStatus, Status } from '@/types/index';
 import { isPicTitleDescStatusArr, isStringArray } from '@/types/index';
-import type { Material } from '@/types/store';
+import type { EditComName, Material } from '@/types/store';
+import { componentMap } from '@/configs/componmentMap';
 
 
 export function getTextStatus(props: TextProps) {
@@ -76,3 +77,14 @@ export function formatDate(
   };
   return new Intl.DateTimeFormat('zh-CN', options).format(new Date(cellValue));
 }
+export const restoreComponentStatus = (coms: Status[]) => {
+  coms.forEach((com) => {
+    // 业务组件的还原
+    com.type = componentMap[com.name]; // 这一步就做了组件的还原
+    // 接下来还原编辑组件
+    for (const key in com.status) {
+      const name = com.status[key].name as EditComName;
+      com.status[key].editCom = componentMap[name];
+    }
+  });
+};

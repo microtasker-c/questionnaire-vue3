@@ -5,6 +5,25 @@ export type SurveyComName = 'single-select' | 'single-pic-select' | 'personal-in
 // 业务组件类型(题目类型 + 非题目类型)
 export type Material = SurveyComName | 'text-note' ;
 
+// 编辑组件类型:集合了所有的编辑组件
+export type EditComName =
+  | 'title-editor'
+  | 'desc-editor'
+  | 'position-editor'
+  | 'size-editor'
+  | 'weight-editor'
+  | 'italic-editor'
+  | 'text-type-editor'
+  | 'pic-options-editor'
+  | 'options-editor';
+
+// 所有的组件类型：业务组件类型 + 编辑组件类型
+export type ComponentName = Material | EditComName;
+
+export type ComponentMap = {
+  [key in ComponentName]: VueComType;
+};
+
 export interface Actions {
   setTextStatus: (textProps: TextProps, text: string) => void;
   addOption: (optionProps: OptionsProps) => void;

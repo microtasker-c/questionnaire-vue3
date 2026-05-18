@@ -12,3 +12,8 @@ export interface SurveyDBDate{
   surveyCount: number,
   coms: Status[]
 }
+
+
+export interface SurveyDBReturnData extends SurveyDBDate{
+  id : number
+}
