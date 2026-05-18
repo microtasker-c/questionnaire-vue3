@@ -46,3 +46,17 @@ export const SurveyComNameArray = [ 'single-select' , 'single-pic-select' , 'per
 export function isSurveyComName(value:string): value is SurveyComName {
   return SurveyComNameArray.includes(value as SurveyComName)
 }
+
+
+const PDFComs = [
+  'single-select' , 'single-pic-select' , 'personal-info-gender' ,  'personal-info-education', 'text-note'
+]
+
+/**
+ * 验证是否有资格能生成PDF
+ * @param value
+ * @returns
+ */
+export function canUsedPDF(value:string): boolean {
+  return PDFComs.includes(value)
+}

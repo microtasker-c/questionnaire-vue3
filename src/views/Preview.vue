@@ -4,11 +4,11 @@
       <!-- 上面的按钮组 -->
       <div class="button-group flex space-between align-items-center">
         <!-- 左边按钮 -->
-        <div class="flex space-between">
+        <div class="flex space-between no-print">
           <el-button type="danger" @click="gobackHandle">返回</el-button>
           <!-- <el-button type="danger" >返回</el-button> -->
           <el-button type="success">生成在线问卷</el-button>
-          <el-button type="warning">生成本地PDF</el-button>
+          <el-button type="warning" @click="getPDF">生成本地PDF</el-button>
         </div>
         <!-- 题目数量 -->
         <div class="mr-15">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <!-- 对应的问卷 -->
-      <div class="content-group no-border">
+      <div class="content-group no-border no-border">
         <div class="content mb-10" v-for="(com, index) in store.coms" :key="index">
           <!-- <div>{{ com }}</div> -->
           <component :is="com.type" :status="com.status" :serialNum="serialNum[index]" />
@@ -33,6 +33,8 @@ import { useEditorStore } from '@/stores/useEditor';
 import { restoreComponentStatus } from '@/utils';
 import { useSurveyNo } from '@/utils/hook';
 import { computed } from 'vue';
+import { canUsedPDF } from '@/types';
+import { ElMessage } from 'element-plus';
 
 const store = useEditorStore()
 
@@ -67,6 +69,21 @@ const gobackHandle = () =>{
   }
 }
 
+// 生成PDF
+const getPDF = () =>{
+  // 检查当前组件是否可以生成PDF
+  const res =  store.coms.every((item) => canUsedPDF(item.name))
+  // console.log(res);
+  if (!res) {
+    ElMessage.warning("当前问卷存在不支持生成的PDF的业务组件，请检查后再试")
+    return
+  }
+  // 开始生成PDF
+  // 使用浏览器接口
+  window.print()
+
+}
+
 
 </script>
 
@@ -93,5 +110,15 @@ const gobackHandle = () =>{
   border-radius: var(--border-radius-lg);
   background: var(--white);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+// 媒体查询 -- 打印时会应用对应的样式
+@media print {
+  .no-print{
+    display: none;
+  }
+  .no-border{
+    border: none;
+    box-shadow: none;
+  }
 }
 </style>
